@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+
+    <script src="https://unpkg.com/@@microsoft/mgt/dist/bundle/mgt-loader.js"></script>
+    <mgt-msal-provider client-id="5f090b00-ac32-4d9a-ab5d-fcaf5542c3f7"></mgt-msal-provider>
+    <mgt-login></mgt-login>
+
+</div>
+
+
+<div class="row" id="content">
+     
+    <div class="column" id="one">  
+        <mgt-get resource="/me/messages" version="beta" scopes="mail.read" max-pages="1">
+            <template>
+                <div class="email" data-for="email in value">
+                    <h4><mgt-person person-query="{{email.sender.emailAddress.address}}" show-name person-card="hover"></mgt-person></h4>
+                        <h3>{{ email.subject }}</h3>
+                        <div data-if="email.bodyPreview" class="preview" innerHtml>{{email.bodyPreview}}</div>
+                        <div data-else class="preview">email body is empty</div>
+                </div>
+            </template>
+            <template data-type="loading">loading</template>
+            <template data-type="error">{{ this }} </template>
+        </mgt-get>   
+    </div>
+
+    <div class="column" id="two">
+        <mgt-agenda group-by-day></mgt-agenda>
+    </div>
+    <div class="column" id="three">
+        <mgt-tasks></mgt-tasks>
+    </div>
+     
+</div>
+
